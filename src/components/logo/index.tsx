@@ -1,11 +1,19 @@
-import { Search } from "lucide-react";
+import Link from "next/link";
+import { Anton } from "next/font/google";
+import { cn } from "@/lib/utils";
+
+const font = Anton({
+  subsets: ["latin"],
+  weight: ["400"],
+});
 
 function Logo() {
   return (
-    <div className="flex items-center gap-1">
-      <Search className="w-8 h-8 text-primary" />
-      <p className="font-bold text-2xl">SnkrSearch</p>
-    </div>
+    <Link href="/" className="flex items-center gap-1 cursor-pointer z-50">
+      <p className={cn("text-xl sm:text-3xl text-white", font.className)}>
+        SnkrSearch
+      </p>
+    </Link>
   );
 }
 
