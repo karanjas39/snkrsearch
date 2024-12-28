@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Logo from "../logo";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -22,14 +23,18 @@ function Navbar() {
 
   return (
     <nav
-      className={`px-4 py-2 flex items-center justify-between w-full fixed z-10 transition-all duration-500 ease-in-out ${
-        isScrolled
-          ? "bg-black/40 backdrop-blur-lg"
-          : "bg-transparent backdrop-blur-none"
-      }`}
+      className={cn(
+        "px-4 py-2 flex items-center justify-between w-full fixed z-10 transition-all duration-500 ease-in-out",
+        isScrolled ? "bg-white shadow-md" : "bg-transparent"
+      )}
     >
-      <Logo />
-      <div className="flex items-center gap-3 text-white">
+      <Logo color={isScrolled ? "text-black" : "text-white"} />
+      <div
+        className={cn(
+          "flex items-center gap-3 transition-all duration-500 ease-in-out",
+          isScrolled ? "text-black" : "text-white"
+        )}
+      >
         <Link href="/login">Log In</Link>
         <Link href="/signup">
           <Button>Sign Up</Button>

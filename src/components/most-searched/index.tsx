@@ -1,11 +1,9 @@
+import CustomSection from "../ui/custom-section";
 import SearchedProduct from "./searchedProduct";
 
 function MostSearched() {
   return (
-    <section className="flex flex-col gap-5 w-[90%] mx-auto my-10">
-      <h2 className="text-3xl font-bold">
-        Most <span className="text-primary">Searched</span>.
-      </h2>
+    <CustomSection heading="Most Searched">
       <div className="grid md:grid-cols-4 sm:grid-cols-3 grid-cols-1 gap-4">
         <SearchedProduct
           brand="Nike"
@@ -55,7 +53,7 @@ function MostSearched() {
           link="/product/nike-air-max-1-86-prm-powerwall-brs-2024-hf0551-300"
         />
       </div>
-    </section>
+    </CustomSection>
   );
 }
 

@@ -1,3 +1,4 @@
+import CustomSection from "../ui/custom-section";
 import { InfiniteMovingCards } from "../ui/infinite-moving-cards";
 
 const testimonials = [
@@ -61,16 +62,13 @@ const testimonials = [
 
 function BrandSection() {
   return (
-    <section className="flex flex-col gap-5 w-[90%] mx-auto my-10">
-      <h2 className="text-3xl font-bold">
-        Our <span className="text-primary">Brands</span>.
-      </h2>
+    <CustomSection heading="Our Brands">
       <InfiniteMovingCards
         items={testimonials}
         direction="right"
-        speed="normal"
+        speed="slow"
       />
-    </section>
+    </CustomSection>
   );
 }
 

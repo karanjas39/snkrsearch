@@ -1,6 +1,8 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { PlaceholdersAndVanishInput } from "../ui/placeholders-and-vanish-input";
+import { useCallback, useState } from "react";
 
 const placeholders = [
   "Travis Scott x Air Jordan 1 Low OG",
@@ -12,12 +14,32 @@ const placeholders = [
 ];
 
 function SearchInput() {
+  const router = useRouter();
+  const [timer, setTimer] = useState<NodeJS.Timeout>();
+
+  const navigateToSearch = useCallback(
+    (searchTerm: string) => {
+      if (searchTerm.trim()) {
+        router.push(`/product/${searchTerm}`);
+      }
+    },
+    [router]
+  );
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
+    if (timer) clearTimeout(timer);
+    const newTimer = setTimeout(() => {
+      navigateToSearch(e.target.value);
+    }, 700);
+    setTimer(newTimer);
   };
+
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("submitted");
+    if (timer) clearTimeout(timer);
+    const form = e.currentTarget;
+    const input = form.querySelector("input") as HTMLInputElement;
+    navigateToSearch(input.value);
   };
 
   return (
