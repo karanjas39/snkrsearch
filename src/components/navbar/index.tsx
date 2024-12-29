@@ -5,6 +5,7 @@ import Link from "next/link";
 import Logo from "../logo";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { User2Icon } from "lucide-react";
 
 function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -24,7 +25,7 @@ function Navbar() {
   return (
     <nav
       className={cn(
-        "px-4 py-2 flex items-center justify-between w-full fixed z-10 transition-all duration-500 ease-in-out",
+        "px-4 py-2 flex items-center justify-between w-full fixed z-20 transition-all duration-500 ease-in-out",
         isScrolled ? "bg-white shadow-md" : "bg-transparent"
       )}
     >
@@ -35,9 +36,10 @@ function Navbar() {
           isScrolled ? "text-black" : "text-white"
         )}
       >
-        <Link href="/login">Log In</Link>
         <Link href="/signup">
-          <Button>Sign Up</Button>
+          <Button>
+            <User2Icon /> Account
+          </Button>
         </Link>
       </div>
     </nav>

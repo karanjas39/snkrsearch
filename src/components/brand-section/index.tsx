@@ -32,7 +32,7 @@ const testimonials = [
   },
   {
     name: "Superkicks",
-    link: "superkicks.in",
+    link: "https://superkicks.in",
   },
   {
     name: "Foot Locker",
@@ -63,11 +63,7 @@ const testimonials = [
 function BrandSection() {
   return (
     <CustomSection heading="Our Brands">
-      <InfiniteMovingCards
-        items={testimonials}
-        direction="right"
-        speed="slow"
-      />
+      <InfiniteMovingCards items={testimonials} direction="left" speed="slow" />
     </CustomSection>
   );
 }

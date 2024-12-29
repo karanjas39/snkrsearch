@@ -1,0 +1,77 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             Int              @id @default(autoincrement())
+  name           String?
+  email          String           @unique
+  password       String
+  admin          Boolean          @default(false)
+  verified       Boolean          @default(false)
+  dob            DateTime?        @map("date_of_birth")
+  gender         String?          @default("Not Specified")
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  searches       UserSearch[]     // Relation to track which searches this user made
+  createdBrands  Brand[]
+  favouriteBrands FavouriteBrand[]
+}
+
+model Search {
+  id           Int              @id @default(autoincrement())
+  name         String
+  brand        String
+  model        String
+  imageURL     String
+  searchCount  Int              @default(1)    // Track how many times this has been searched
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  
+  userSearches UserSearch[]     // Relation to track which users made this search
+
+  @@unique([brand, model])      // Prevent duplicate searches for same brand/model
+}
+
+model UserSearch {
+  id           Int              @id @default(autoincrement())
+  user         User?            @relation(fields: [userId], references: [id])
+  userId       Int?            
+  search       Search           @relation(fields: [searchId], references: [id])
+  searchId     Int
+  sessionId    String?          // For non-logged in users
+  createdAt    DateTime         @default(now())
+
+  @@unique([userId, searchId])  // Prevent duplicate searches for logged-in users
+  @@unique([sessionId, searchId]) // Prevent duplicate searches for non-logged in users
+}
+
+
+model Brand {
+  id              Int              @id @default(autoincrement())
+  name            String           @unique
+  creator         User             @relation(fields: [createdBy], references: [id])
+  createdBy       Int
+  createdAt       DateTime         @default(now())
+  logoUrl         String?
+  description     String?
+
+  favouriteBrands FavouriteBrand[]
+}
+
+model FavouriteBrand {
+  id           Int              @id @default(autoincrement())
+  user         User             @relation(fields: [userId], references: [id])
+  userId       Int
+  brand        Brand            @relation(fields: [brandId], references: [id])
+  brandId      Int
+  createdAt    DateTime         @default(now())
+
+  @@unique([userId, brandId])  // Prevent duplicate favorites
+}
