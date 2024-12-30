@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "next/legacy/image";
 import BannerImage from "@/public/banner.jpg";
 import SearchInput from "@/components/hero-section/searchInput";
 import HeroText from "@/components/hero-section/heroText";

@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "next/legacy/image";
 import SignInImage from "@/public/signin.jpg";
 import SignIn from "@/components/signin";
 
