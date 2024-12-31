@@ -7,6 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
 model User {
   id             Int              @id @default(autoincrement())
   name           String?
@@ -15,7 +16,8 @@ model User {
   admin          Boolean          @default(false)
   verified       Boolean          @default(false)
   dob            DateTime?        @map("date_of_birth")
-  gender         String?          @default("Not Specified")
+  gender         String?          @default("other")
+  otp            String?      
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
 
@@ -59,8 +61,7 @@ model Brand {
   creator         User             @relation(fields: [createdBy], references: [id])
   createdBy       Int
   createdAt       DateTime         @default(now())
-  logoUrl         String?
-  description     String?
+  companyUrl      String?
 
   favouriteBrands FavouriteBrand[]
 }

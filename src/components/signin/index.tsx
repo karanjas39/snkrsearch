@@ -18,15 +18,50 @@ import { Input } from "@/components/ui/input";
 import PasswordInput from "@/components/ui/passwordInput";
 import DividerHeading from "@/components/ui/divider-heading";
 import Link from "next/link";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 function SignIn() {
+  const [loading, setLoading] = useState(false);
   const form = useForm<z_signin_type>({
     resolver: zodResolver(z_signin),
-    defaultValues: { email: "", password: "" },
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
+  const { toast } = useToast();
+  const router = useRouter();
 
-  function onSubmit(values: z_signin_type) {
-    console.log(values);
+  async function onSubmit(data: z_signin_type) {
+    try {
+      setLoading(true);
+      const response = await signIn("credentials", {
+        ...data,
+        redirect: false,
+      });
+
+      if (response?.error) {
+        throw new Error(response.error);
+      }
+
+      toast({
+        description: "You have been logged in successfully.",
+      });
+
+      router.push(`/dashboard`);
+    } catch (error) {
+      const err = error as Error;
+      console.error(err.message);
+      toast({
+        description: "Failed to login right now.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -65,7 +100,9 @@ function SignIn() {
             name="password"
             render={({ field }) => <PasswordInput field={field} />}
           />
-          <Button type="submit">Submit</Button>
+          <Button type="submit" isLoading={loading}>
+            Submit
+          </Button>
         </form>
       </Form>
       <DividerHeading text="OR" classes="w-[70%] my-4" />

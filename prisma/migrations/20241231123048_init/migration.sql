@@ -4,10 +4,11 @@ CREATE TABLE "User" (
     "name" TEXT,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
+    "dob" TIMESTAMP(3) NOT NULL,
+    "gender" TEXT NOT NULL,
+    "otp" TEXT DEFAULT '',
     "admin" BOOLEAN NOT NULL DEFAULT false,
     "verified" BOOLEAN NOT NULL DEFAULT false,
-    "date_of_birth" TIMESTAMP(3),
-    "gender" TEXT DEFAULT 'Not Specified',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -45,8 +46,7 @@ CREATE TABLE "Brand" (
     "name" TEXT NOT NULL,
     "createdBy" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "logoUrl" TEXT,
-    "description" TEXT,
+    "companyUrl" TEXT,
 
     CONSTRAINT "Brand_pkey" PRIMARY KEY ("id")
 );

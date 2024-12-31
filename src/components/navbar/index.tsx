@@ -5,17 +5,19 @@ import Link from "next/link";
 import Logo from "../logo";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { DoorOpenIcon, User2Icon } from "lucide-react";
+import { DoorOpenIcon, User2Icon, LogOutIcon } from "lucide-react";
 import { useIsPathName } from "@/hooks/use-pathname";
-import { signIn } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const { data: session } = useSession();
   const isLandingPage = useIsPathName("/");
   const isSignInPage = useIsPathName("/signin");
+  const isDashboardPage = useIsPathName("/dashboard");
 
   useEffect(() => {
-    if (!isLandingPage) return; // Only add scroll listener on landing page
+    if (!isLandingPage) return;
 
     const handleScroll = () => {
       const scrolled = window.scrollY > 350;
@@ -49,16 +51,28 @@ function Navbar() {
     <nav className={navClasses}>
       <Logo color={textColorClass} />
       <div className={cn("flex items-center gap-3", textColorClass)}>
-        {!isSignInPage ? (
-          <Link href="/signin">
-            <Button onClick={() => signIn()}>
-              <DoorOpenIcon /> Sign In
+        {session ? (
+          isDashboardPage ? (
+            <Button onClick={() => signOut({ callbackUrl: "/" })}>
+              <LogOutIcon /> Log Out
             </Button>
-          </Link>
-        ) : (
+          ) : (
+            <Link href="/dashboard">
+              <Button>
+                <User2Icon /> Dashboard
+              </Button>
+            </Link>
+          )
+        ) : isSignInPage ? (
           <Link href="/signup">
             <Button>
               <User2Icon /> Sign Up
+            </Button>
+          </Link>
+        ) : (
+          <Link href="/signin">
+            <Button onClick={() => signIn()}>
+              <DoorOpenIcon /> Sign In
             </Button>
           </Link>
         )}
