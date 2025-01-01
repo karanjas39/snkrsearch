@@ -1,12 +1,7 @@
 import AuthProvider from "@/components/providers/auth-provider";
-import Dashboard from "@/components/dashboard";
 
-function DashboardPage() {
-  return (
-    <AuthProvider>
-      <Dashboard />
-    </AuthProvider>
-  );
+function DashboardPage({ children }: Readonly<{ children: React.ReactNode }>) {
+  return <AuthProvider>{children}</AuthProvider>;
 }
 
 export default DashboardPage;

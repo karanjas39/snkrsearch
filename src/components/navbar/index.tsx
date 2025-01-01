@@ -8,13 +8,14 @@ import { cn } from "@/lib/utils";
 import { DoorOpenIcon, User2Icon, LogOutIcon, Loader2 } from "lucide-react";
 import { useIsPathName } from "@/hooks/use-pathname";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { usePathname } from "next/navigation";
 
 function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const { data: session, status } = useSession();
   const isLandingPage = useIsPathName("/");
   const isSignInPage = useIsPathName("/signin");
-  const isDashboardPage = useIsPathName("/dashboard");
+  const isDashboardPage = usePathname().includes("/dashboard");
 
   useEffect(() => {
     if (!isLandingPage) return;
