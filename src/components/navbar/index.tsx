@@ -5,13 +5,13 @@ import Link from "next/link";
 import Logo from "../logo";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { DoorOpenIcon, User2Icon, LogOutIcon } from "lucide-react";
+import { DoorOpenIcon, User2Icon, LogOutIcon, Loader2 } from "lucide-react";
 import { useIsPathName } from "@/hooks/use-pathname";
 import { useSession, signIn, signOut } from "next-auth/react";
 
 function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const isLandingPage = useIsPathName("/");
   const isSignInPage = useIsPathName("/signin");
   const isDashboardPage = useIsPathName("/dashboard");
@@ -47,35 +47,61 @@ function Navbar() {
       : "text-white"
     : "text-black";
 
+  const renderAuthButton = () => {
+    if (status === "loading") {
+      return (
+        <Button disabled variant="ghost">
+          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+        </Button>
+      );
+    }
+
+    if (session) {
+      if (isDashboardPage) {
+        return (
+          <Button
+            onClick={() => signOut({ callbackUrl: "/" })}
+            className="gap-2"
+          >
+            <LogOutIcon className="h-4 w-4" />
+            Log Out
+          </Button>
+        );
+      }
+      return (
+        <Link href="/dashboard">
+          <Button className="gap-2">
+            <User2Icon className="h-4 w-4" />
+            Dashboard
+          </Button>
+        </Link>
+      );
+    }
+
+    if (isSignInPage) {
+      return (
+        <Link href="/signup">
+          <Button className="gap-2">
+            <User2Icon className="h-4 w-4" />
+            Sign Up
+          </Button>
+        </Link>
+      );
+    }
+
+    return (
+      <Button onClick={() => signIn()} className="gap-2">
+        <DoorOpenIcon className="h-4 w-4" />
+        Sign In
+      </Button>
+    );
+  };
+
   return (
     <nav className={navClasses}>
       <Logo color={textColorClass} />
       <div className={cn("flex items-center gap-3", textColorClass)}>
-        {session ? (
-          isDashboardPage ? (
-            <Button onClick={() => signOut({ callbackUrl: "/" })}>
-              <LogOutIcon /> Log Out
-            </Button>
-          ) : (
-            <Link href="/dashboard">
-              <Button>
-                <User2Icon /> Dashboard
-              </Button>
-            </Link>
-          )
-        ) : isSignInPage ? (
-          <Link href="/signup">
-            <Button>
-              <User2Icon /> Sign Up
-            </Button>
-          </Link>
-        ) : (
-          <Link href="/signin">
-            <Button onClick={() => signIn()}>
-              <DoorOpenIcon /> Sign In
-            </Button>
-          </Link>
-        )}
+        {renderAuthButton()}
       </div>
     </nav>
   );

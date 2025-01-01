@@ -1,14 +1,10 @@
-"use client";
-
 import AuthProvider from "@/components/providers/auth-provider";
-import { useSession } from "next-auth/react";
+import Dashboard from "@/components/dashboard";
 
 function DashboardPage() {
-  const session = useSession();
-
   return (
     <AuthProvider>
-      <div>{JSON.stringify(session)}</div>
+      <Dashboard />
     </AuthProvider>
   );
 }

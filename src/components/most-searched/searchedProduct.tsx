@@ -43,7 +43,7 @@ function SearchedProduct({
               />
             </div>
           </CardTitle>
-          <CardDescription className="flex flex-col gap-1">
+          <CardDescription className="flex flex-col gap-2">
             <p className="line-clamp-2">{name}</p>
             <div className="flex items-start gap-2">
               <TooltipProvider>

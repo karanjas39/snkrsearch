@@ -20,7 +20,7 @@ function SearchInput() {
   const navigateToSearch = useCallback(
     (searchTerm: string) => {
       if (searchTerm.trim()) {
-        router.push(`/product/${searchTerm}`);
+        router.push(`/search/${searchTerm}`);
       }
     },
     [router]
