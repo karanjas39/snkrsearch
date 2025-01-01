@@ -51,7 +51,7 @@ function SignIn() {
         description: "You have been logged in successfully.",
       });
 
-      router.push(`/dashboard`);
+      router.push(`/dashboard/profile`);
     } catch (error) {
       const err = error as Error;
       console.error(err.message);

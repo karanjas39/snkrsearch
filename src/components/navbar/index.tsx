@@ -70,7 +70,7 @@ function Navbar() {
         );
       }
       return (
-        <Link href="/dashboard">
+        <Link href="/dashboard/profile">
           <Button className="gap-2">
             <User2Icon className="h-4 w-4" />
             Dashboard
