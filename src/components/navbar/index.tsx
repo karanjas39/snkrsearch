@@ -5,10 +5,11 @@ import Link from "next/link";
 import Logo from "../logo";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { DoorOpenIcon, User2Icon, LogOutIcon, Loader2 } from "lucide-react";
+import { DoorOpenIcon, User2Icon, LogOutIcon } from "lucide-react";
 import { useIsPathName } from "@/hooks/use-pathname";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
+import DashboardLoader from "@/app/loading";
 
 function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -52,7 +53,7 @@ function Navbar() {
     if (status === "loading") {
       return (
         <Button disabled variant="ghost">
-          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          <DashboardLoader width={20} />
         </Button>
       );
     }
@@ -63,6 +64,7 @@ function Navbar() {
           <Button
             onClick={() => signOut({ callbackUrl: "/" })}
             className="gap-2"
+            size="sm"
           >
             <LogOutIcon className="h-4 w-4" />
             Log Out
@@ -71,7 +73,7 @@ function Navbar() {
       }
       return (
         <Link href="/dashboard/profile">
-          <Button className="gap-2">
+          <Button className="gap-2" size="sm">
             <User2Icon className="h-4 w-4" />
             Dashboard
           </Button>
@@ -82,7 +84,7 @@ function Navbar() {
     if (isSignInPage) {
       return (
         <Link href="/signup">
-          <Button className="gap-2">
+          <Button className="gap-2" size="sm">
             <User2Icon className="h-4 w-4" />
             Sign Up
           </Button>
@@ -91,7 +93,7 @@ function Navbar() {
     }
 
     return (
-      <Button onClick={() => signIn()} className="gap-2">
+      <Button onClick={() => signIn()} className="gap-2" size="sm">
         <DoorOpenIcon className="h-4 w-4" />
         Sign In
       </Button>

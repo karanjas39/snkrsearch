@@ -46,28 +46,32 @@ function SearchedProduct({
           <CardDescription className="flex flex-col gap-2">
             <p className="line-clamp-2">{name}</p>
             <div className="flex items-start gap-2">
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <Badge className="max-w-max">{brand}</Badge>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Product Brand</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <Badge className="max-w-max" variant="secondary">
-                      {model}
-                    </Badge>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Product Model</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+              {brand && (
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <Badge className="max-w-max">{brand}</Badge>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Product Brand</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              )}
+              {model && (
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <Badge className="max-w-max" variant="secondary">
+                        {model}
+                      </Badge>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Product Model</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              )}
             </div>
           </CardDescription>
         </CardHeader>

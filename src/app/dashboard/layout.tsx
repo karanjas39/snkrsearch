@@ -14,7 +14,7 @@ export default function DashboardLayout({
         <Card className="h-full flex flex-col lg:flex-row sm:w-[98%] w-[95%] mx-auto relative">
           <DashboardNavbar />
           <ScrollArea className="flex-1 h-full">
-            <main className="p-6">{children}</main>
+            <main className="p-6 w-full">{children}</main>
           </ScrollArea>
         </Card>
       </div>

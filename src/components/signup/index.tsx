@@ -28,6 +28,7 @@ import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { signIn } from "next-auth/react";
 import { format, parseISO } from "date-fns";
+import { default as axios } from "axios";
 
 function SignUp() {
   const [loading, setLoading] = useState(false);
@@ -42,23 +43,21 @@ function SignUp() {
   });
   const { toast } = useToast();
 
-  async function onSubmit(data: z_signup_type) {
+  async function onSubmit(formData: z_signup_type) {
     try {
       setLoading(true);
-      const response = await fetch("/api/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      })
-        .then((res) => res.json())
+
+      const { data } = await axios
+        .post("/api/signup", formData, {
+          headers: { "Content-Type": "application/json" },
+        })
+
         .catch((error) => {
           throw new Error(error as string);
         });
 
-      if (response?.error) {
-        throw new Error(response.error);
+      if (data?.error) {
+        throw new Error(data.error);
       }
 
       toast({
