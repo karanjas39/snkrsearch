@@ -53,6 +53,7 @@ export type SearchResult = {
     image_url: string;
     brand: string;
     model: string;
+    slug: string;
   }[];
 };
 

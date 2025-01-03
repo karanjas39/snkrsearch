@@ -21,7 +21,7 @@ model User {
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
 
-  searches       UserSearch[]     // Relation to track which searches this user made
+  searches       Search[]
   createdBrands  Brand[]
   favouriteBrands FavouriteBrand[]
 }
@@ -32,27 +32,14 @@ model Search {
   brand        String
   model        String
   imageURL     String
-  searchCount  Int              @default(1)    // Track how many times this has been searched
+  slug         String           @unique
   createdAt    DateTime         @default(now())
-  updatedAt    DateTime         @updatedAt
-  
-  userSearches UserSearch[]     // Relation to track which users made this search
+  searchCount  Int              @default(0)
 
-  @@unique([brand, model])      // Prevent duplicate searches for same brand/model
-}
-
-model UserSearch {
-  id           Int              @id @default(autoincrement())
   user         User?            @relation(fields: [userId], references: [id])
-  userId       Int?            
-  search       Search           @relation(fields: [searchId], references: [id])
-  searchId     Int
-  sessionId    String?          // For non-logged in users
-  createdAt    DateTime         @default(now())
-
-  @@unique([userId, searchId])  // Prevent duplicate searches for logged-in users
-  @@unique([sessionId, searchId]) // Prevent duplicate searches for non-logged in users
+  userId       Int?
 }
+
 
 
 model Brand {
@@ -74,5 +61,5 @@ model FavouriteBrand {
   brandId      Int
   createdAt    DateTime         @default(now())
 
-  @@unique([userId, brandId])  // Prevent duplicate favorites
+  @@unique([userId, brandId])
 }

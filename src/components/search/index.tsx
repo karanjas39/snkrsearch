@@ -39,7 +39,7 @@ async function SearchComponent({ initialQuery }: { initialQuery: string }) {
             <SearchedProduct
               brand={result.brand}
               imageURL={result.image_url}
-              link={`/product/${result.model}`}
+              link={`/product/${result.slug}/${result.model}`}
               model={result.model}
               name={result.name}
               key={result.id}
