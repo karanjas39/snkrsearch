@@ -13,7 +13,7 @@ export function PlaceholdersAndVanishInput({
   disable = false,
 }: {
   placeholders: string[];
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   disable?: boolean;
 }) {

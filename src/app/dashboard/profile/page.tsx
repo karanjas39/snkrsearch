@@ -1,4 +1,4 @@
-import ProfileEditTab from "@/components/dashboard/profile/profile-edit-tab";
+import ProfileEditTab from "@/components/dashboard/profile/Edit Profile/profile-edit-tab";
 import ProfileTab from "@/components/dashboard/profile/profile-tab";
 import {
   Card,

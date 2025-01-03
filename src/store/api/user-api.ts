@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { tagTypes } from "@/types/api-tags";
+import { tagTypes, USER_DETAIL_TAG } from "@/types/api-tags";
+import { z_editProfile_type } from "@/types";
 
 export const userApi = createApi({
   reducerPath: "userApi",
@@ -22,6 +23,15 @@ export const userApi = createApi({
       void
     >({
       query: () => "/user/details",
+      providesTags: [USER_DETAIL_TAG],
+    }),
+    updateUserDetails: builder.mutation<void, z_editProfile_type>({
+      query: (body) => ({
+        url: "/user/edit",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: [USER_DETAIL_TAG],
     }),
   }),
 });

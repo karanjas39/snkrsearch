@@ -67,13 +67,13 @@ function SignUp() {
       await signIn("credentials", {
         email: data.email,
         password: data.password,
-        callbackUrl: "/dashboard",
+        callbackUrl: "/dashboard/profile",
       });
     } catch (error) {
       const err = error as Error;
       console.error(err.message);
       toast({
-        description: err.message ?? "Failed to login right now.",
+        description: err.message ?? "Failed to signup right now.",
         variant: "destructive",
       });
     } finally {

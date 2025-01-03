@@ -28,6 +28,20 @@ export const z_signup = z
     message: "Passwords must match.",
   });
 
+export const z_editProfile = z.object({
+  name: z.string().min(3, "Name should be minimum 3 characters."),
+  email: z.string().email({ message: "This is not a valid email." }),
+  dob: z
+    .string({ message: "Date of birth is required." })
+    .refine((date) => !isNaN(Date.parse(date)), {
+      message: "Invalid date format.",
+    })
+    .transform((date) => new Date(date)),
+  gender: z.enum(["male", "female", "other"], {
+    message: "Gender must be 'male', 'female', or 'other'.",
+  }),
+});
+
 export type SearchResult = {
   count: number;
   page: number;
@@ -49,3 +63,4 @@ export interface ResponseType {
 
 export type z_signin_type = z.infer<typeof z_signin>;
 export type z_signup_type = z.infer<typeof z_signup>;
+export type z_editProfile_type = z.infer<typeof z_editProfile>;
