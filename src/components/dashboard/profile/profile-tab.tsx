@@ -1,29 +1,69 @@
 "use client";
 
 import DashboardLoader from "@/app/loading";
+import { Badge } from "@/components/ui/badge";
 import { TabsContent } from "@/components/ui/tabs";
-import { useEffect, useState } from "react";
-import { default as axios } from "axios";
+import { userApi } from "@/store/api/user-api";
+import { formatDate } from "date-fns";
 
 function ProfileTab() {
-  const [user, setUser] = useState(null);
+  const { data, isFetching } = userApi.endpoints.userDetails.useQuery();
 
-  const getUserProfile = async () => {
-    const { data } = await axios.get("/api/user/details");
-    return data;
-  };
-
-  useEffect(() => {
-    getUserProfile().then((data) => {
-      setUser(data.user);
-    });
-  }, []);
-
-  if (!user) {
+  if (!data || isFetching) {
     return <DashboardLoader />;
   }
 
-  return <TabsContent value="profile">Profile tab</TabsContent>;
+  return (
+    <TabsContent value="profile">
+      {data && !!data?.user ? (
+        <div className="flex flex-col gap-1">
+          <CardContentDiv title="Name" data={data.user.name} />
+          <CardContentDiv title="Email" data={data.user.email} />
+          <CardContentDiv
+            title="DOB"
+            data={formatDate(data.user.dob, "dd MMMM yyyy")}
+          />
+          <CardContentDiv
+            title="Gender"
+            data={data.user.gender}
+            styles="capitalize"
+          />
+          <CardContentDiv title="Email Verified" data={data.user.verified} />
+          <CardContentDiv
+            title="Joined Us On"
+            data={formatDate(data.user.createdAt, "dd MMMM yyyy")}
+          />
+        </div>
+      ) : (
+        <p className="text-center text-sm text-muted-foreground">
+          No user details found.
+        </p>
+      )}
+    </TabsContent>
+  );
+}
+
+function CardContentDiv({
+  title,
+  data,
+  styles,
+}: {
+  title: string;
+  data: string | boolean;
+  styles?: string;
+}) {
+  return (
+    <div className="flex items-center md:justify-between gap-2 text-sm sm:hover:bg-slate-100 sm:p-[3px] sm:rounded">
+      <p className="font-bold text-muted-foreground">{title}</p>
+      {title !== "Email Verified" ? (
+        <p className={styles ?? ""}>{data}</p>
+      ) : (
+        <Badge variant={data ? "secondary" : "destructive"}>
+          {data ? "Yes" : "No"}
+        </Badge>
+      )}
+    </div>
+  );
 }
 
 export default ProfileTab;

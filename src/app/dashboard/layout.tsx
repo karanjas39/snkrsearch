@@ -11,10 +11,10 @@ export default function DashboardLayout({
   return (
     <AuthProvider>
       <div className="h-[calc(100vh-85px)] mt-4">
-        <Card className="h-full flex flex-col lg:flex-row sm:w-[98%] w-[95%] mx-auto relative">
+        <Card className="h-full flex flex-col lg:flex-row sm:w-[95%] w-[98%] mx-auto relative">
           <DashboardNavbar />
           <ScrollArea className="flex-1 h-full">
-            <main className="p-6 w-full">{children}</main>
+            <main className="sm:p-6 p-3 w-full">{children}</main>
           </ScrollArea>
         </Card>
       </div>

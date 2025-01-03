@@ -1,22 +1,22 @@
 import { SearchResult } from "@/types";
 import SearchPageInput from "./search-page-input";
 import SearchedProduct from "@/components/most-searched/searchedProduct";
-import { default as axios } from "axios";
 
 async function SearchComponent({ initialQuery }: { initialQuery: string }) {
-  const { data: initialResults }: { data: SearchResult } = await axios.post(
+  const initialResults: SearchResult = await fetch(
     "https://www.sneakerjagers.com/api/sneakers/filter",
     {
-      filter: "all",
-      locale: "gb",
-      query: initialQuery,
-    },
-    {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
+      body: JSON.stringify({
+        filter: "all",
+        locale: "gb",
+        query: initialQuery,
+      }),
     }
-  );
+  ).then((res) => res.json());
 
   return (
     <div className="sm:w-[90%] w-[95%] mx-auto">

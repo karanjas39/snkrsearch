@@ -42,5 +42,10 @@ export type SearchResult = {
   }[];
 };
 
+export interface ResponseType {
+  error?: string;
+  message?: string;
+}
+
 export type z_signin_type = z.infer<typeof z_signin>;
 export type z_signup_type = z.infer<typeof z_signup>;
